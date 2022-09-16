@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <title><%=generalInfo.companyNameShort %><%=generalInfo.companyNameLong%> - Edit Product </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="w3.css">
+    <link rel="stylesheet" href="showroom.css">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <body>
+        <%- include('tiles/navbar') %>
+        <br>
+        <div class="w3-content w3-padding w3-card" style="max-width:500px">
+        <div class="w3-container w3-padding-32">
+            <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Edit Product</h3>
+            <% if(errorMessage){ %>
+                <div class="w3-text-red"><p><%= errorMessage %></p></div>
+            <%}%>
+
+            <form id="myForm" onsubmit="handleSubmit(event)">
+                <p>
+                    <label>Product Name</label>
+                    <input id="product-name" class ="w3-input w3-border fixedinput" type ="text" name="productName" required>
+                </p>
+
+                <br>
+
+                <p>
+                    <label>Product Price</label>
+                    <input id="product-price" class ="w3-input w3-border fixedinput" type ="number" name="productPrice" required>
+                </p>
+
+                <br>
+
+                <p>
+                    <label>Product Brand</label>
+                    <input id="product-brand" class ="w3-input w3-border fixedinput" type ="text" name="productBrand" required>
+                </p>
+
+                <br>
+
+                <p>
+                    <label>Product Image (.jpg)</label>
+                    <input id="product-image" type="file" class ="w3-input w3-border fixedinput" name="productImage" accept=".jpg">
+                </p>
+
+                <div class ="w3-center" style="margin-top: 20px;">
+                    <button type="submit" class="w3-button w3-black">SAVE</button>
+                    <a class="w3-button w3-black" href="<%= root %>#products">CANCEL</a>
+                </div>
+            </form>
+        </div>
+        </div>
+        <script>
+            const productId = localStorage.getItem("productId");
+            const form = document.querySelector("#myForm");
+            const productName = document.querySelector("#product-name");
+            const productPrice = document.querySelector("#product-price");
+            const productBrand = document.querySelector("#product-brand");
+            const productImage = document.querySelector("#product-image");
+
+            if(productId){
+                fetch("http://localhost:8080/product/" + productId)
+                .then(response => response.text())
+                .then(result => {
+                    result = JSON.parse(result);
+                    productName.value = result.name;
+                    productBrand.value = result.brand;
+                    productPrice.value = result.price;
+                })
+                .catch(err => console.log(err));
+            }
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                console.log(productImage.files[0]);
+
+                const formdata = new FormData();
+                formdata.append("name", productName.value);
+                formdata.append("brand", productBrand.value);
+                formdata.append("price", productPrice.value);
+                if(productImage.files[0]){
+                    formdata.append("image", productImage.files[0], productImage.value);
+                }
+
+                var requestOptions = {
+                    method: 'PUT',
+                    body: formdata,
+                    redirect: 'follow'
+                };
+
+                fetch(`http://localhost:8080/product/${productId}`, requestOptions)
+                .then(res => {
+                    form.reset();
+                    window.location.href = "http://localhost:8080/showroom";
+                })
+                .catch(err => console.log(err));
+            }
+        </script>
+    </body>
+</html>

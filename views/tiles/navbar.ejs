@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="<%= root %>  #home>" class="navbar-logo">
+                <b><%= generalInfo.companyNameShort %></b>
+                <%= generalInfo.companyNameLong %>
+            </a>
+
+        </div>
+        <div class="navbar-search">
+            <input type="text" placeholder="Search in...">
+            <button>
+                <i class='bx bx-search'></i>
+            </button>
+        </div>
+        <!-- <div class="w3-right w3-hide-small">
+            <a href="<%= root %> #products" class="w3-bar-item w3-button">Products</a>
+            <a href="<%= root %> #about" class="w3-bar-item w3-button">About</a>
+            <% if (logged) { %>
+                <a href="<%= root %> logout " class="w3-bar-item w3-button w3-text-red">Logout</a>
+            <%  } else { %>
+            <a href="login" class="w3-bar-item w3-button w3-text-red">Login</a>
+            <% } %> 
+        </div> -->
+        <div class="navbar-right">
+            <button>
+                <i class='bx bx-heart'></i>
+            </button>
+            <button>
+                <i class='bx bx-cart-alt'></i>
+            </button>
+            <% if (logged) { %>
+                <button>
+                    <a href="<%= root %> logout ">
+                        <i class='bx bx-log-out-circle'></i>
+                    </a>
+                </button>
+            <%  } else { %>
+                <button>
+                    <a href="login">
+                        <i class='bx bx-user-circle'></i>
+                    </a>
+                </button>
+            <% } %> 
+        </div>
+    </div>
+</div>

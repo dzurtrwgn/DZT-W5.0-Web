@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="product-section">
+        <h2 class="product-head">Best Selling</h2>
+        <div class="product-list">
+            <% for (var i = 0; i < productList.length; i++){ %>
+                <div class="product">
+                    <div class="product-thumb">
+                        <img src="<%=productList[i].image%>" alt="">
+                        <button class="product-view-button">View</button>
+                        <% if (logged) { %>
+                                <button onclick="handleDelete('<%=productList[i]._id%>')" class="product-heart-button"><i class='bx bx-trash'></i></button>
+                                <button onclick="handleEdit('<%=productList[i]._id%>')" class="product-cart-button"><i class='bx bx-edit'></i></button>
+                        <%  }  %>
+                    </div>
+                    <div class="product-body">
+                        <p class="product-brand"><%= productList[i].brand %></p>
+                        <p class="product-name"><%= productList[i].name %></p>
+                        <p class="product-price">$<%= productList[i].price %></p>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        <% if(logged) { %>
+            <div class="w3-padding">
+                <a class ="w3-button w3-green w3-right" title="Add Product" href="<%= root %>add-product" >+</a>
+                </div>
+            <% } %>
+        <%- include ('categories') %>
+        <div class="product-delivery">
+            <div class="product-delivery-item">
+                <div class="product-delivery-title">Free Delivery</div>
+                <div class="product-delivery-desc">When You Spend $80 or More</div>
+            </div>
+            <div class="product-delivery-item">
+                <div class="product-delivery-title">Tracked delivery</div>
+                <div class="product-delivery-desc">Only $6 Standard 6-10 Days</div>
+            </div>
+            <div class="product-delivery-item">
+                <div class="product-delivery-title">Need it in a Hurry</div>
+                <div class="product-delivery-desc">You can Express Shipping in 5 Days</div>
+            </div>
+            <div class="product-delivery-item">
+                <div class="product-delivery-title">30 - Day returns</div>
+                <div class="product-delivery-desc">Return Most Items Within 30 Days</div>
+            </div>
+        </div>
+    </div>
+</div>

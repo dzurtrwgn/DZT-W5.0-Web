@@ -1,0 +1,10 @@
+<div class="w3-container w3-padding-32" id="about">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">About</h3>
+    <span style="white-space: pre-line">
+        <p><%- about %></p>
+    </span>
+    
+    <% if (logged) { %>
+    <a class="w3-button w3-blue" href="<%= root %>edit-about">Edit</a>
+    <% } %>
+</div>
